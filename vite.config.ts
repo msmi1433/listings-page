@@ -9,6 +9,9 @@ export default defineConfig({
     tanstackRouter({
       target: "react",
       autoCodeSplitting: true,
+      routesDirectory: "./src/routes",
+      generatedRouteTree: "./src/routeTree.gen.ts",
+      disableLogging: true,
     }),
     tailwindcss(),
     react({
@@ -20,5 +23,6 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    setupFiles: "./src/test-setup.ts",
   },
 });
