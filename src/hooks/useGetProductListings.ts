@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProductListings } from "../services/getProductListings";
+import { PRODUCT_LISTINGS } from "../constants/cacheKeys";
 
-export const useGetProductListings = () => {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["productListings"],
+export const useGetProductListings = () =>
+  useQuery({
+    queryKey: [PRODUCT_LISTINGS],
     queryFn: getProductListings,
   });
-  console.log(data, "data");
-  return { data, error, isLoading };
-};
