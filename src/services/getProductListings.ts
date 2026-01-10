@@ -1,4 +1,13 @@
 import type { UseGetProductListingsParams } from "../hooks/useGetProductListings";
+import type { Facet } from "../types/facet";
+import type { Pagination } from "../types/pagination";
+import type { Product } from "../types/product";
+
+type ProductListingResponse = {
+  products: Product[];
+  pagination: Pagination;
+  facets: Facet[];
+};
 
 export const getProductListings = async (
   params: UseGetProductListingsParams
@@ -22,6 +31,6 @@ export const getProductListings = async (
     throw new Error("Failed to fetch product listings");
   }
 
-  const data = await response.json();
+  const data: ProductListingResponse = await response.json();
   return data;
 };
