@@ -2,11 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef } from "react";
 import FacetPanel from "../components/FacetPanel";
 import ProductCard from "../components/ProductCard";
-import { defaultQueryParams } from "../constants/defaultQueryParams";
 import { useGetProductListings } from "../hooks/useGetProductListings";
 import { ProductListingsSearchSchema } from "../schemas/productSearchValidationSchema";
-import { convertFacetsForQuery } from "../utils/convertFacetsForQuery";
 import type { Facet } from "../types";
+import { convertFacetsForQuery } from "../utils/convertFacetsForQuery";
 
 export const Route = createFileRoute("/$productListings")({
   component: ProductListings,
