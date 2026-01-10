@@ -1,19 +1,24 @@
-import cn from "classnames";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
+import cn from "classnames";
 import type {
   PriceFacetOption,
   PriceRange,
   StandardFacetOption,
 } from "../types/facet";
 
-type FacetOptionProps = {
-  option: PriceFacetOption | StandardFacetOption;
-  facetIdentifier: string;
+const testIds = {
+  checkbox: "facet-option-checkbox",
+  label: "facet-option-label",
 };
 
 type ParsedFacetOption = {
   identifier: string;
   value: string | PriceRange;
+};
+
+type FacetOptionProps = {
+  option: PriceFacetOption | StandardFacetOption;
+  facetIdentifier: string;
 };
 
 function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
@@ -87,9 +92,11 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
         onChange={handleChange}
         className="mr-2"
         disabled={isDisabled}
+        data-testid={testIds.checkbox}
       />
       <label
         htmlFor={`facet-${option.identifier}`}
+        data-testid={testIds.label}
         className={cn("text-sm", { "text-gray-400": isDisabled })}
       >
         {option.displayValue}{" "}
@@ -98,4 +105,6 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
     </div>
   );
 }
+
+FacetOption.testIds = testIds;
 export default FacetOption;
