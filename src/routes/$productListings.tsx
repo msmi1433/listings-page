@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useRef } from "react";
 import FacetPanel from "../components/FacetPanel";
 import ProductCard from "../components/ProductCard";
 import { defaultQueryParams } from "../constants/defaultQueryParams";
 import { useGetProductListings } from "../hooks/useGetProductListings";
 import { ProductListingsSearchSchema } from "../schemas/productSearchValidationSchema";
 import { convertFacetsForQuery } from "../utils/convertFacetsForQuery";
+import type { Facet } from "../types";
 
 export const Route = createFileRoute("/$productListings")({
   component: ProductListings,
@@ -31,14 +33,30 @@ function ProductListings() {
     isFetching: productListingsDataIsFetching,
   } = useGetProductListings(queryParams);
 
+  // Store initial facets on first load (when no filters are applied)
+  const initialFacetsRef = useRef<Facet[] | null>(null);
+  if (productListingsData && !initialFacetsRef.current && !search.facets) {
+    initialFacetsRef.current = productListingsData.facets;
+  }
+
+  // Use initial facets if available, otherwise use current facets from API
+  const facetsToDisplay =
+    initialFacetsRef.current || productListingsData?.facets || [];
+
   return (
     <main>
       {productListingsDataIsFetching && <p>Loading...</p>}
       {productListingsData && (
         <div className="grid grid-cols-4 gap-4 items-start">
           <section className="col-span-1 space-y-1">
-            {productListingsData.facets.map((facet) => (
-              <FacetPanel key={facet.identifier} facet={facet} />
+            {facetsToDisplay.map((facet) => (
+              <FacetPanel
+                key={facet.identifier}
+                facet={facet}
+                currentFacetData={productListingsData.facets.find(
+                  (f) => f.identifier === facet.identifier
+                )}
+              />
             ))}
           </section>
           <section className="grid grid-cols-3 gap-4 col-span-3">

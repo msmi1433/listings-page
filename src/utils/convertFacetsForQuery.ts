@@ -10,9 +10,14 @@ export const convertFacetsForQuery = (
     (acc, [facetKey, facetValues]) => {
       const parsedValues = facetValues.map((value) => {
         try {
-          return JSON.parse(value);
+          const parsed = JSON.parse(value);
+          // Extract only identifier and value for the API query
+          return {
+            identifier: parsed.identifier,
+            value: parsed.value,
+          };
         } catch {
-          return { value };
+          return { identifier: value, value };
         }
       });
       acc[facetKey] = parsedValues;
