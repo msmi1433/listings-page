@@ -5,5 +5,5 @@ type PageLayoutProps = {
 };
 
 export default function PageLayout({ children }: PageLayoutProps) {
-  return <div className="p-8">{children}</div>;
+  return <div className="p-8 bg-neutral-300">{children}</div>;
 }

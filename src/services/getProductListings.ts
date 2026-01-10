@@ -1,7 +1,5 @@
 import type { UseGetProductListingsParams } from "../hooks/useGetProductListings";
-import type { Facet } from "../types/facet";
-import type { Pagination } from "../types/pagination";
-import type { Product } from "../types/product";
+import type { Facet, Pagination, Product } from "../types";
 
 type ProductListingResponse = {
   products: Product[];
