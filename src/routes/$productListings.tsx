@@ -33,7 +33,7 @@ function ProductListings() {
   } = useGetProductListings(queryParams);
 
   // Store initial facets on first load (when no filters are applied)
-  // Aware that this approach will not work if someone navigates to a URL with search params pre-applied
+  // Aware that this approach will not work if someone navigates to URL with search params pre-applied
   const initialFacetsRef = useRef<Facet[] | null>(null);
   if (productListingsData && !initialFacetsRef.current && !search.facets) {
     initialFacetsRef.current = productListingsData.facets;
@@ -41,7 +41,7 @@ function ProductListings() {
 
   // Use initial facets if available, otherwise use current facets from API
   const facetsToDisplay =
-    initialFacetsRef.current || productListingsData?.facets || [];
+    initialFacetsRef.current ?? productListingsData?.facets ?? [];
 
   return (
     <main className="relative">

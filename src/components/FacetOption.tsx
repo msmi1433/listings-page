@@ -1,10 +1,19 @@
 import cn from "classnames";
 import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
-import type { PriceFacetOption, StandardFacetOption } from "../types/facet";
+import type {
+  PriceFacetOption,
+  PriceRange,
+  StandardFacetOption,
+} from "../types/facet";
 
 type FacetOptionProps = {
   option: PriceFacetOption | StandardFacetOption;
   facetIdentifier: string;
+};
+
+type ParsedFacetOption = {
+  identifier: string;
+  value: string | PriceRange;
 };
 
 function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
@@ -18,7 +27,7 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
     const currentFacetValues = currentFacets[facetIdentifier] || [];
 
     // Create an object with identifier and value
-    const facetOption = {
+    const facetOption: ParsedFacetOption = {
       identifier: option.identifier,
       value: option.value,
     };
@@ -33,7 +42,7 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
     } else {
       // Remove the option if unchecked (match by identifier within the stringified value)
       updatedFacetValues = currentFacetValues.filter((v) => {
-        const parsed = JSON.parse(v);
+        const parsed = JSON.parse(v) as ParsedFacetOption;
         return parsed.identifier !== option.identifier;
       });
     }
@@ -61,9 +70,9 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
 
   const isChecked =
     search.facets?.[facetIdentifier]?.some((v) => {
-      const parsed = JSON.parse(v);
+      const parsed = JSON.parse(v) as ParsedFacetOption;
       return parsed.identifier === option.identifier;
-    }) || false;
+    }) ?? false;
 
   const isDisabled = option.productCount === 0;
 
