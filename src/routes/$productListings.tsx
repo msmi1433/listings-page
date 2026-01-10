@@ -20,11 +20,11 @@ function ProductListings() {
   const facetsForQuery = convertFacetsForQuery(search.facets);
 
   const queryParams = {
-    ...defaultQueryParams,
     productType,
-    pageNumber: search.pageNumber || defaultQueryParams.pageNumber,
-    size: search.size || defaultQueryParams.size,
-    sort: search.sort || defaultQueryParams.sort,
+    pageNumber: search.pageNumber ?? 1,
+    size: search.size ?? 30,
+    sort: search.sort ?? 1,
+    additionalPages: 0,
     facets: facetsForQuery,
   };
 
@@ -34,6 +34,7 @@ function ProductListings() {
   } = useGetProductListings(queryParams);
 
   // Store initial facets on first load (when no filters are applied)
+  // Aware that this approach will not work if someone navigates to a URL with search params pre-applied
   const initialFacetsRef = useRef<Facet[] | null>(null);
   if (productListingsData && !initialFacetsRef.current && !search.facets) {
     initialFacetsRef.current = productListingsData.facets;
@@ -44,8 +45,12 @@ function ProductListings() {
     initialFacetsRef.current || productListingsData?.facets || [];
 
   return (
-    <main>
-      {productListingsDataIsFetching && <p>Loading...</p>}
+    <main className="relative">
+      {productListingsDataIsFetching && (
+        <div className="absolute inset-0 bg-gray-500/30 backdrop-blur-sm flex items-center justify-center z-50 cursor-wait">
+          <div className="text-gray-700 font-semibold">Loading...</div>
+        </div>
+      )}
       {productListingsData && (
         <div className="grid grid-cols-4 gap-4 items-start">
           <section className="col-span-1 space-y-1">
