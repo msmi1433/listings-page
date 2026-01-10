@@ -23,15 +23,15 @@ type BaseFacetOption = {
   productCount: number;
 };
 
-type PriceFacetOption = BaseFacetOption & {
+export type PriceFacetOption = BaseFacetOption & {
   value: PriceRange;
 };
 
-type StandardFacetOption = BaseFacetOption & {
+export type StandardFacetOption = BaseFacetOption & {
   value: string;
 };
 
-type PriceRange = {
+export type PriceRange = {
   gte: number;
   lte: number;
 };

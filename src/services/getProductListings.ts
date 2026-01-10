@@ -21,6 +21,7 @@ export const getProductListings = async (
         size: 10,
         additionalPages: 0,
         sort: 1,
+        facets: params.facets,
       }),
     }
   );

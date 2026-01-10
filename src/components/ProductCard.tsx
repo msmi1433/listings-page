@@ -14,11 +14,11 @@ export default function ProductCard({ product }: ProductCardProps) {
     product;
 
   return (
-    <div className="rounded space-y-4 bg-white">
+    <div className="rounded space-y-4 bg-white shadow-sm">
       <img
         src={image.url}
         alt={image.attributes.imageAltText}
-        className="rounded"
+        className="rounded-t"
       />
       <div className="px-2 pb-4 space-y-2">
         <img
