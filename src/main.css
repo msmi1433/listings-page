@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@utility star-rating-bg {
+  background-repeat: repeat-x;
+  background-size: 20px 20px;
+  filter: brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(0%)
+    hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+@utility star-rating-fill {
+  background-repeat: repeat-x;
+  background-size: 20px 20px;
+}
