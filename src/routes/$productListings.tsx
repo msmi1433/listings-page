@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import PageLayout from "../components/PageLayout";
 import { useGetProductListings } from "../hooks/useGetProductListings";
 
 export const Route = createFileRoute("/$productListings")({
@@ -7,15 +6,15 @@ export const Route = createFileRoute("/$productListings")({
 });
 
 function ProductListings() {
-  const { productListings } = Route.useParams();
+  const { productListings: productType } = Route.useParams();
   const {
     data: productListingsData,
     isFetching: productListingsDataIsFetching,
-  } = useGetProductListings();
+  } = useGetProductListings({ productType });
 
   return (
     <>
-      <h3>Product Listings: {productListings}</h3>
+      <h3>Product Listings: hello</h3>
       {productListingsDataIsFetching && <p>Loading...</p>}
       {/* Add your product listings display here */}
     </>
