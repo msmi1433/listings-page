@@ -1,13 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  beforeLoad: () => {
+    throw redirect({
+      to: "/$productListings",
+      params: { productListings: "toilets" },
+    });
+  },
 });
-
-function Index() {
-  return (
-    <div className="p-40">
-      <h3>Welcome Home everyone!</h3>
-    </div>
-  );
-}
