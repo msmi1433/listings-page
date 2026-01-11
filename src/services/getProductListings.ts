@@ -1,3 +1,8 @@
+import {
+  API_BASE_URL,
+  API_KEY,
+  LISTINGS_ENDPOINT,
+} from "../constants/apiConstants";
 import type { UseGetProductListingsParams } from "../hooks/useGetProductListings";
 import type { Facet, Pagination, Product } from "../types";
 
@@ -10,21 +15,21 @@ type ProductListingResponse = {
 export const getProductListings = async (
   params: UseGetProductListingsParams
 ) => {
-  const response = await fetch(
-    "https://spanishinquisition.victorianplumbing.co.uk/interviews/listings?apikey=yj2bV48J40KsBpIMLvrZZ1j1KwxN4u3A83H8IBvI",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        query: params.productType,
-        pageNumber: params.pageNumber,
-        size: params.size,
-        additionalPages: params.additionalPages,
-        sort: params.sort,
-        facets: params.facets,
-      }),
-    }
-  );
+  const uri = `${API_BASE_URL}${LISTINGS_ENDPOINT}?apiKey=${API_KEY}`;
+  const response = await fetch(uri, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: params.productType,
+      pageNumber: params.pageNumber,
+      size: params.size,
+      additionalPages: params.additionalPages,
+      sort: params.sort,
+      facets: params.facets,
+    }),
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch product listings");
