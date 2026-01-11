@@ -2,18 +2,13 @@ import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import cn from "classnames";
 import type {
   PriceFacetOption,
-  PriceRange,
   StandardFacetOption,
+  ParsedFacetOption,
 } from "../types/facet";
 
 const testIds = {
   checkbox: "facet-option-checkbox",
   label: "facet-option-label",
-};
-
-export type ParsedFacetOption = {
-  identifier: string;
-  value: string | PriceRange;
 };
 
 type FacetOptionProps = {

@@ -17,10 +17,10 @@ export const getProductListings = async (
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: params.productType,
-        pageNumber: 0,
-        size: 10,
-        additionalPages: 0,
-        sort: 1,
+        pageNumber: params.pageNumber,
+        size: params.size,
+        additionalPages: params.additionalPages,
+        sort: params.sort,
         facets: params.facets,
       }),
     }

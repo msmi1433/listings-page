@@ -1,4 +1,4 @@
-import type { ParsedFacetOption } from "../components/FacetOption";
+import type { ParsedFacetOption } from "../types/facet";
 import type { ProductListingsSearch } from "../schemas/productSearchValidationSchema";
 import type { PriceRange } from "../types/facet";
 
