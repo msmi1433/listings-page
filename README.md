@@ -24,6 +24,7 @@ The project is setup to immediately redirect to `/toilets`, however, the solutio
 
 - React
 - Vite
+- Node
 - Tailwind
 - TanStack Router
 - TanStack Query
