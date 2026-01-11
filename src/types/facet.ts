@@ -35,3 +35,8 @@ export type PriceRange = {
   gte: number;
   lte: number;
 };
+
+export type ParsedFacetOption = {
+  identifier: string;
+  value: string | PriceRange;
+};

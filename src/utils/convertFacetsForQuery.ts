@@ -1,7 +1,8 @@
+import type { ParsedFacetOption } from "../types/facet";
 import type { ProductListingsSearch } from "../schemas/productSearchValidationSchema";
 import type { PriceRange } from "../types/facet";
 
-export const convertFacetsForQuery = (
+export const convertStringifiedFacetsForQuery = (
   facets: ProductListingsSearch["facets"]
 ) => {
   if (!facets) return undefined;
@@ -9,16 +10,11 @@ export const convertFacetsForQuery = (
   const parsedFacets = Object.entries(facets).reduce(
     (acc, [facetKey, facetValues]) => {
       const parsedValues = facetValues.map((value) => {
-        try {
-          const parsed = JSON.parse(value);
-          // Extract only identifier and value for the API query
-          return {
-            identifier: parsed.identifier,
-            value: parsed.value,
-          };
-        } catch {
-          return { identifier: value, value };
-        }
+        const parsedValue: ParsedFacetOption = JSON.parse(value);
+        return {
+          identifier: parsedValue.identifier,
+          value: parsedValue.value,
+        };
       });
       acc[facetKey] = parsedValues;
       return acc;
