@@ -47,6 +47,9 @@ If I had more time, these are the improvements that I would have liked to implem
 - **Better error/load handling**
   - This solution does not currently have any robust error handling
   - The loading state could also be better implemented
+- **Implementation of discounted pricing**
+  - Would have liked to make use of the discounted prices and render them on the cards
+  - Also would have rendered sale badges where relevant
 - **More pagination utilities**
   - The pagination implementation is very basic
   - I would like to implement a 'load more'/infinite query approach, or, a better pagination UI tool that lets users navigate directly to specific pages
