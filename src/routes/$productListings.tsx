@@ -5,7 +5,7 @@ import ProductCard from "../components/ProductCard";
 import { useGetProductListings } from "../hooks/useGetProductListings";
 import { ProductListingsSearchSchema } from "../schemas/productSearchValidationSchema";
 import type { Facet } from "../types";
-import { convertFacetsForQuery } from "../utils/convertFacetsForQuery";
+import { convertStringifiedFacetsForQuery } from "../utils/convertFacetsForQuery";
 
 export const Route = createFileRoute("/$productListings")({
   component: ProductListings,
@@ -16,7 +16,7 @@ function ProductListings() {
   const { productListings: productType } = Route.useParams();
   const search = Route.useSearch();
 
-  const facetsForQuery = convertFacetsForQuery(search.facets);
+  const facetsForQuery = convertStringifiedFacetsForQuery(search.facets);
 
   const queryParams = {
     productType,
@@ -46,7 +46,7 @@ function ProductListings() {
   return (
     <main className="relative">
       {productListingsDataIsFetching && (
-        <div className="absolute inset-0 bg-gray-500/30 backdrop-blur-sm flex items-center justify-center z-50 cursor-wait">
+        <div className="absolute inset-0 bg-gray-500/30 backdrop-blur-sm flex items-center justify-center z-100 cursor-wait">
           <div className="text-gray-700 font-semibold">Loading...</div>
         </div>
       )}

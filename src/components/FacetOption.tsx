@@ -11,7 +11,7 @@ const testIds = {
   label: "facet-option-label",
 };
 
-type ParsedFacetOption = {
+export type ParsedFacetOption = {
   identifier: string;
   value: string | PriceRange;
 };
@@ -28,47 +28,52 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
-    const currentFacets = search.facets || {};
-    const currentFacetValues = currentFacets[facetIdentifier] || [];
 
-    // Create an object with identifier and value
-    const facetOption: ParsedFacetOption = {
+    const allSelectedFacets = search.facets ?? {};
+    const allSelectedOptionsForThisFacet =
+      allSelectedFacets[facetIdentifier] ?? [];
+
+    // Create an object with option identifier and value
+    const selectedFacetOption: ParsedFacetOption = {
       identifier: option.identifier,
       value: option.value,
     };
 
-    // Stringify the option for storage in URL params
-    const stringifiedOption = JSON.stringify(facetOption);
+    // Stringify the option object for storage in search params
+    const stringifiedSelectedFacetOption = JSON.stringify(selectedFacetOption);
 
-    let updatedFacetValues: string[];
+    let updatedFacetOptions: string[];
     if (checked) {
       // Add the stringified option if checked
-      updatedFacetValues = [...currentFacetValues, stringifiedOption];
+      updatedFacetOptions = [
+        ...allSelectedOptionsForThisFacet,
+        stringifiedSelectedFacetOption,
+      ];
     } else {
       // Remove the option if unchecked (match by identifier within the stringified value)
-      updatedFacetValues = currentFacetValues.filter((v) => {
-        const parsed = JSON.parse(v) as ParsedFacetOption;
-        return parsed.identifier !== option.identifier;
+      updatedFacetOptions = allSelectedOptionsForThisFacet.filter((option) => {
+        const parsedOption = JSON.parse(option) as ParsedFacetOption;
+        return parsedOption.identifier !== selectedFacetOption.identifier;
       });
     }
 
-    const updatedFacets = { ...currentFacets };
-    if (updatedFacetValues.length > 0) {
-      updatedFacets[facetIdentifier] = updatedFacetValues;
+    const updatedAllSelectedFacets = { ...allSelectedFacets };
+    if (updatedFacetOptions.length > 0) {
+      updatedAllSelectedFacets[facetIdentifier] = updatedFacetOptions;
     } else {
       // Remove the facet key if no values are selected
-      delete updatedFacets[facetIdentifier];
+      delete updatedAllSelectedFacets[facetIdentifier];
     }
 
-    const hasAnyFacets = Object.keys(updatedFacets).length > 0;
+    const someFacetsAreSelected =
+      Object.keys(updatedAllSelectedFacets).length > 0;
 
     navigate({
       to: "/$productListings",
       params,
       search: {
         ...search,
-        facets: hasAnyFacets ? updatedFacets : undefined, // Remove facets param entirely if empty
-        pageNumber: 1, // Reset to first page when filters change
+        facets: someFacetsAreSelected ? updatedAllSelectedFacets : undefined, // Remove facets param entirely if empty
       },
     });
   };
@@ -82,22 +87,20 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
   const isDisabled = option.productCount === 0;
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center gap-2">
       <input
         type="checkbox"
         id={`facet-${option.identifier}`}
-        name={option.displayValue}
         value={JSON.stringify(option.value)}
         checked={isChecked}
         onChange={handleChange}
-        className="mr-2"
         disabled={isDisabled}
         data-testid={testIds.checkbox}
       />
       <label
         htmlFor={`facet-${option.identifier}`}
-        data-testid={testIds.label}
         className={cn("text-sm", { "text-gray-400": isDisabled })}
+        data-testid={testIds.label}
       >
         {option.displayValue}{" "}
         <span className="text-gray-400">({option.productCount})</span>
