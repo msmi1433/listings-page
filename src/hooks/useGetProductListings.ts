@@ -19,7 +19,15 @@ export type UseGetProductListingsParams = {
 
 export const useGetProductListings = (params: UseGetProductListingsParams) =>
   useQuery({
-    queryKey: [PRODUCT_LISTINGS, params],
+    queryKey: [
+      PRODUCT_LISTINGS,
+      params.productType,
+      params.pageNumber,
+      params.size,
+      params.additionalPages,
+      params.sort,
+      params.facets,
+    ],
     queryFn: () => getProductListings(params),
     placeholderData: keepPreviousData,
   });
