@@ -1,5 +1,7 @@
 # Listings page
 
+Please see the [reasoning](./REASONING.md) file for more detail.
+
 ## Start up
 
 1. Ensure Node is installed
@@ -19,8 +21,6 @@
 The project is setup to immediately redirect to `/toilets`, however, the solution works with all product types so feel free to try out other product lines (e.g. `/baths`).
 
 ## Tech stack
-
-Please see the [reasoning](./REASONING.md) file for more detail.
 
 - React
 - Vite
