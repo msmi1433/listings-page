@@ -68,6 +68,7 @@ function FacetOption({ option, facetIdentifier }: FacetOptionProps) {
       params,
       search: {
         ...search,
+        pageNumber: 1, // Reset to first page on facet change
         facets: someFacetsAreSelected ? updatedAllSelectedFacets : undefined, // Remove facets param entirely if empty
       },
     });
