@@ -41,6 +41,12 @@ If I had more time, these are the improvements that I would have liked to implem
   - The type safety is flaky due to the use of `JSON.stringify()`
   - This could potentially be improved by only storing the option identifier in search params, and then mapping the relevant values to each identifier at the query level (where we have facet data)
   - Hashing the options/values could be another option
+- **Better handling of full facet data**
+  - My solution to the changing list of available facets only works if the initial page load does not include any search params in the URL (so it can get the full facet list initially)
+  - I would like to implement a solution that works regardless of how users reach the page
+- **Better error/load handling**
+  - This solution does not currently have any robust error handling
+  - The loading state could also be better implemented
 - **More pagination utilities**
   - The pagination implementation is very basic
   - I would like to implement a 'load more'/infinite query approach, or, a better pagination UI tool that lets users navigate directly to specific pages
