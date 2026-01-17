@@ -1,3 +1,10 @@
+# Edit 17/1/2025
+After doing some reading, I have realised that the point I made about repeated API calls with TanStack Query is not actually a defect/issue.
+
+I now understand that Query refetches data in the background whenever params change (unless the hook is configured with `staleTime`). It optimistically renders any cached data for responsiveness, then updates the cache once the fresh data arrives. This pattern explains the API calls I observed.
+
+I've crossed out the issue below accordingly.
+
 # Reasoning
 
 The purpose of this file is to explain the tech-stack that was selected for this project.
@@ -16,7 +23,7 @@ I will also outline some improvements that I'd make if given more time.
 
 - TanStack Query was chosen as I felt that caching would be important given the vast amount of query data that can be passed to the API
 - It also works well with TanStack Router
-- Unfortunately the caching does not seem to be working properly (getting an API call for any change to the query), but given more time I would have ensured the cache was working as intended
+- ~~Unfortunately the caching does not seem to be working properly (getting an API call for any change to the query), but given more time I would have ensured the cache was working as intended~~
 
 ### Zod
 
